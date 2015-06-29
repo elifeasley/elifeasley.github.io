@@ -53,22 +53,27 @@ var education = {
         }
     ]
 };
-// education contains:
 
-//     schools: array of objects with
-//          name: string
-//          location: string
-//          degree: string
-//          majors: array of strings
-//          dates: integer (graduation date)
-//          url: string
-//     onlineCourses: array with
-//          title: string
-//          school: string
-//          date: integer (date finished)
-//          url: string
-//     display: function taking no parameters
-// work contains
+education.display = function() {
+    console.log('hi');
+    for (var school in education.schools) {
+        console.log(school);
+        school = education.schools[school];
+        $("#education").append(HTMLschoolStart);
+        var formattedSchool = HTMLschoolName.replace("%data%", school.name);
+        var formattedDegree = HTMLschoolDegree.replace("%data%", school.degree);
+        var formattedLocation = HTMLschoolLocation.replace(
+            "%data%", school.location);
+        majors = "";
+        for (major in school.major){
+            majors += HTMLschoolMajor.replace("%data%", school.major[major]);
+        }
+        
+        var schoolDescription = formattedSchool + formattedDegree + formattedLocation + majors;
+        $("education-entry:last").append(schoolDescription);
+    }    
+}
+
 var work = {
     "jobs": [
         {
@@ -105,15 +110,6 @@ work.display = function() {
     }
 }
 
-work.display();
-//     jobs: array of objects with
-//          employer: string 
-//          title: string 
-//          location: string 
-//          dates: string (works with a hyphen between them)
-//          description: string 
-//     display: function taking no parameters
-
 var projects = {
     "projects": [
         {
@@ -134,24 +130,19 @@ projects.display = function() {
     for (var job in projects.projects) {
         $("#projects").append(HTMLprojectStart);
         var formattedTitle = HTMLprojectTitle.replace("%data%", projects.projects[job].title);
-        var formattedDate = HTMLprojectDates.replace("%data%", projects.projects[job].date);
+        var formattedDate = HTMLprojectDates.replace("%data%", projects.projects[job].dates);
         var formattedDescription = HTMLprojectDescription.replace("%data%", projects.projects[job].description);
         
         var employerTitle = formattedTitle + formattedDate + formattedDescription;
         $(".project-entry:last").append(employerTitle);
     }
 }
+
 projects.display()
 bio.display();
+work.display();
+education.display();
 $("#mapDiv").append(googleMap);
-// projects contains:
-
-//     projects: array of objects with
-//           title: string 
-//           dates: string (works with a hyphen between them)
-//           description: string
-//           images: array with string urls
-//     display: function taking no parameters
 
 // Iterate through each JSON and append its information to index.html in the correct section.
 // First off, you’ll be using jQuery’s selector.append() and selector.prepend() functions to modify index.html. selector.append() makes an element appear at the end of a selected section. selector.prepend() makes an element appear at the beginning of a selected section.
