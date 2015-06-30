@@ -15,16 +15,22 @@ var bio =  {
         "regretting",
         "python"
     ],
-    "biopic": "https://drive.google.com/file/d/1oSmMed5nJVm_rjDstOdyd5rTvr4Nif_SlQ/view?usp=sharing"
+    "biopic": "https://i.imgur.com/HJV93Qi.jpg"
 };
 
 bio.display = function() {
-    var formattedName = HTMLheaderName.replace("%data%","eli feasley");
-    var formattedRole = HTMLheaderRole.replace("%data%", "data scientist");
+    var formattedName = HTMLheaderName.replace("%data%",bio.name);
+    var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
     
     $("#header").prepend(formattedName);
     $("#header").prepend(formattedRole);
+    
+    var formattedPic = HTMLbioPic.replace("%data%", bio.biopic);
+    var formattedMessage = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
 
+
+    $("#header").prepend(formattedPic);
+    $("#header").append(formattedMessage);
     var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
     var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
     var formattedTwitter = HTMLtwitter.replace("%data%", bio.contacts.twitter);
@@ -32,10 +38,17 @@ bio.display = function() {
     var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
     
     $("#topContacts").append(formattedMobile);
-    $("#topContacts").append(formattedEmail);
-    $("#topContacts").append(formattedTwitter);
-    $("#topContacts").append(formattedGithub);
-    $("#topContacts").append(formattedLocation);
+    $("#footerContacts").append(formattedEmail);
+    $("#footerContacts").append(formattedTwitter);
+    $("#footerContacts").append(formattedGithub);
+    $("#footerContacts").append(formattedLocation);
+    
+    $("#header").append(HTMLskillsStart);
+    // Display skills to screen
+    for (var skill in bio.skills) {
+        var formattedSkill = HTMLskills.replace("%data%", bio.skills[skill]);
+        $("#skills:last").append(formattedSkill);
+    }
 };
 
 
@@ -49,18 +62,18 @@ var education = {
                 "machine learning"
             ],
             "dates": 0,
-            "url": "cs.utexas.edu"
+            "url": "http://cs.utexas.edu"
         }
     ]
 };
 
 education.display = function() {
-    console.log('hi');
     for (var school in education.schools) {
-        console.log(school);
         school = education.schools[school];
         $("#education").append(HTMLschoolStart);
-        var formattedSchool = HTMLschoolName.replace("%data%", school.name);
+        var formattedSchool = HTMLschoolName
+            .replace("%data%", school.name)
+            .replace('#', school.url);
         var formattedDegree = HTMLschoolDegree.replace("%data%", school.degree);
         var formattedLocation = HTMLschoolLocation.replace(
             "%data%", school.location);
@@ -70,7 +83,7 @@ education.display = function() {
         }
         
         var schoolDescription = formattedSchool + formattedDegree + formattedLocation + majors;
-        $("education-entry:last").append(schoolDescription);
+        $(".education-entry:last").append(schoolDescription);
     }    
 }
 
@@ -143,16 +156,3 @@ bio.display();
 work.display();
 education.display();
 $("#mapDiv").append(googleMap);
-
-// Iterate through each JSON and append its information to index.html in the correct section.
-// First off, you’ll be using jQuery’s selector.append() and selector.prepend() functions to modify index.html. selector.append() makes an element appear at the end of a selected section. selector.prepend() makes an element appear at the beginning of a selected section.
-// Pay close attention to the ids of the <div>s in index.html and the HTML snippets in helper.js. They’ll be very useful as jQuery selectors for selector.append() and selector.prepend()
-// You’ll also be using the JavaScript method string.replace(old, new) to swap out all the placeholder text (e.g. %data%) for data from your resume JSONs.
-// Here’s an example of some code that would add the location of one your companies to the page:
-// var formattedLocation = HTMLworkLocation.replace("%data%", work.jobs[job].location);
-// $(".work-entry:last").append(formattedLocation);
-// Use the mockup at the page of this document as a guide for the order in which you should append elements to the page.
-// The resume includes an interactive map. To add it, append the googleMap string to <div id=”mapDiv”>.
-// All of your code for adding elements to the resume should be within functions. And all of your functions should be encapsulated within the same objects containing your resume data. For instance, your functions for appending work experience elements to the page should be found within the same object containing data about your work experience.
-// Your resume should also console.log() information about click locations. On line 90 in helper.js, you’ll find a jQuery onclick handler that you’ll need to modify to work with the logClicks(x,y) function above it.
-// It’s possible to make additional information show up when you click on the pins in the map. Check out line 174 in helper.js and the Google Maps API to get started
