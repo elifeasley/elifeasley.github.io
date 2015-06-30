@@ -1,3 +1,5 @@
+"use strict";
+
 var bio =  {
     "name": "eli feasley",
     "role": "\"data\" \"scientist\"",
