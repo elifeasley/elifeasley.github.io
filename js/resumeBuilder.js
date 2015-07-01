@@ -10,11 +10,11 @@ var bio =  {
         "twitter": "eli_awry",
         "location": "around"
     },
-    "welcomeMessage": "in which a hard-crafted sense of identity is unicoded",
+    "welcomeMessage": "this is a mix of fiction and reality",
     "skills": [
-        "retrospecting",
         "introspecting",
         "regretting",
+        "synergy",
         "python"
     ],
     "biopic": "https://i.imgur.com/HJV93Qi.jpg"
