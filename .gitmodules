@@ -1,0 +1,3 @@
+[submodule "fnord"]
+	path = fnord
+	url = https://github.com/elifeasley/fnord-clicker.git
