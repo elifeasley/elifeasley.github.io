@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Hidden Communities</title>
+	<link rel="stylesheet" href="css/blogpost.css">
+</head>
+<body>
+  <div class="bubble">
+
+<h1>What are the Hidden Communities of Reddit?</h1>
+    Social networks like Facebook, LinkedIn, and MySpace, where the relationships between users are explicit, have been mined to death. But social communities like Reddit, StackExchange, Hacker News and SomethingAwful have barely been mined at all. I'm working on a project to try to predict social cascades - when new memes are going to spread, and where they are going to go. But inference on graphs is hard!
+<br>
+To limit the difficulty, we can reduce the number of edges in the graph, and only look at the important ones. But what are important edges?
+<br>
+Time to SCRAPE ALL THE THINGS! I wrote scrapers for Reddit (using their awesome <a href="http://www.reddit.com/dev/api"> API</a>) SomethingAwful (using <a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>!) and StackExchange (well, actually I used the <a href="http://blog.stackoverflow.com/category/cc-wiki-dump/">dataset they so kindly released</a>). For Reddit and SomethingAwful, I made a huge adjacency matrix that showed how many users posting in each forum had also recently posted in another forum. StackExchange has public member subscriptions, and <a href="http://www.wesleytansey.com">Wes</a> made a matrix from that.
+<br>
+The first ideas for meaningful matrices failed. The default subreddits, the content-aggregating forums, and StackOverflow were so overrepresented in terms of sheer numbers that it was nearly impossible to see anything else for the noise. There are 50! = 3.0414093e+64  connections between 50 different sites. Our solution? Finding the sites with a reasonable number of subscribers (to eliminate flukes) with connections several standard deviations above the norm of the strength of a standard connection.  
+<br>
+Our initial attempts looked something like this:
+<br>
+<img src="images/clusterfuck.png" width=50%>
+<br>
+Graphviz is a great library for procedurally generating graphs, and it was really easy to play around with parameters and filters to find the best ways to see significant things about the structure of these communities. It turns out there's an amazing library that mimics graphviz in javascript called <a href = "http://arborjs.org/">arbor.js</a> that I'm using to present this data. 
+<br>
+It's immediately clear that this can be used as a recommender system. My favorite show, Doctor Who, is more significantly linked with Sherlock than anything else.
+<br>
+It's also interesting to look at how sub-communities evolve, and the paths between communities. Reddit was definitely the most fun.
+<br>
+<h3>From Knitting to trees via TrollXChromosomes</h3>
+<br>
+<img src="images/womantrees.png" width=100%>
+<br>
+There's a sort of fractal property to these graphs - when we set the limit for significance low enough, the graph is fully connected. When it's too high, we get nearly no edges. But as the level of significance gets lower, big communities break into smaller, more tightly related subcommunities that break up even more.
+<h3>With a higher standard for strong-enough connection</h3>
+<br>
+<img src="images/breaking-up.png" width=60%>
+<br>
+Reddit has a more fractured structure with tighter subcommunities than the other sites. SomethingAwful only has a handful of specialized subcommunities - Automobiles, Sports, Movies and Fitness. Reddit is much more niche, and has groups within groups.  Examine the difference in the structure of the NSFW subreddits in the dense and sparse Reddit visualizations below.
+<br>
+<h3>There seems to be no structure to desire</h3>
+<img src="images/dense-nsfw.png" width=50%>
+<br>
+<h3>Until we dig deeper</h3>
+<br>
+<img src="images/sparse-nsfw.png" width=50%>
+<br>
+Finally, there were a few stereotypes that didn't show up, and a few that did. For instance, the female cluster didn't connect with any of the relationship-oriented subreddits. Some sterotypes were perpetuated - people who like cats like catpictures, for instance. And some new affiliations were discovered.
+<h3>Some obvious connections, and some less obvious</h4>
+<br>
+<img src="images/expected.png" width=20%>
+<img src="images/unexpected.png" width=20%>
+<br>
+Now that we have this sparser graph, we can do efficient inference with our ML algorithms, but that's another post for another day.
+</body>
+</html>
