@@ -1,4 +1,4 @@
-# a website created by a data scientis
+# a website created by a data scientist
 ## set your expectations low
 ###lower
 
